@@ -7,7 +7,6 @@ public class NovaSolicitacao implements Status {
 	@Override
 	public void solicitar() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
