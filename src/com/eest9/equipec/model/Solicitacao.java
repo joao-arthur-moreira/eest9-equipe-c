@@ -3,7 +3,6 @@ package com.eest9.equipec.model;
 import java.util.Date;
 
 import com.eest9.equipec.state.Status;
-import com.eest9.equipec.state.impl.AguardandoChefia;
 import com.eest9.equipec.state.impl.NovaSolicitacao;
 
 
@@ -15,12 +14,10 @@ public class Solicitacao {
 	private Date fim;
 	private String motivo;
 	private String observacao;
-	private Status status = new NovaSolicitacao();
+	private Status status = new NovaSolicitacao(this);
 	
 	public void solicitar() {
-		this.status.solicitar();
-		this.status = new AguardandoChefia();
-		System.out.println(String.format(">>>>>>> Solicitação de (%s) aguardando aprovação da chefia <<<<<<<<", this.funcionario.getNome()));
+		this.status.solicitar();		
 	}
 	
 	public void aprovar() {

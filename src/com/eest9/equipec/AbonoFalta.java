@@ -23,6 +23,10 @@ public class AbonoFalta {
 		solicitacaoAbono.setMotivo("Teste");
 		
 		solicitacaoAbono.solicitar();	
+		solicitacaoAbono.aprovar();
+		solicitacaoAbono.recusar();
+		solicitacaoAbono.aprovar();
+		solicitacaoAbono.aprovar();
 		
 	}
 

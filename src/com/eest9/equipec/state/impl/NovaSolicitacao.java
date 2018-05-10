@@ -1,12 +1,20 @@
 package com.eest9.equipec.state.impl;
 
+import com.eest9.equipec.model.Solicitacao;
 import com.eest9.equipec.state.Status;
 
 public class NovaSolicitacao implements Status {
+	
+	private Solicitacao solicitacao;
+	
+	public NovaSolicitacao(Solicitacao solicitacao) {
+		this.solicitacao = solicitacao;
+	}
 
 	@Override
 	public void solicitar() {
-		// TODO Auto-generated method stub
+		this.solicitacao.setStatus(new AguardandoChefia(solicitacao));
+		System.out.println(">>>>>>>> Solicitação enviada para chefia <<<<<<<<<<<<<");
 	}
 
 	@Override
