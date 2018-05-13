@@ -1,0 +1,18 @@
+# Arquivos gerados pelo projeto netbeans
+nbproject
+manifest.mf
+build.xml
+
+*.class
+.DS_Store
+Servers/*
+.metadata
+.settings
+.classpath
+.project
+target/
+*~
+build
+bin
+*.tern-project
+/nbproject/private/
