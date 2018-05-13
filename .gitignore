@@ -1,3 +1,8 @@
+# Arquivos gerados pelo projeto netbeans
+nbproject
+manifest.mf
+build.xml
+
 *.class
 .DS_Store
 Servers/*
@@ -10,3 +15,4 @@ target/
 build
 bin
 *.tern-project
+/nbproject/private/
