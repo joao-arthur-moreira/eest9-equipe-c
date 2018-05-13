@@ -20,13 +20,13 @@ public class AguardandoRH implements Status {
 	@Override
 	public void aprovar() {
 		this.solicitacao.setStatus(null);
-		System.out.println(">>>>>>>> RH: Solicitação aprovada pelo RH <<<<<<<<<<<<<");
+		System.out.println(">>>>>>>> RH: SolicitaÃ§Ã£o aprovada pelo RH <<<<<<<<<<<<<");
 	}
 
 	@Override
 	public void recusar() {
 		this.solicitacao.setStatus(new AguardandoChefia(solicitacao));
-		System.out.println(">>>>>>>> RH: Solicitação recusada retornada para chefia <<<<<<<<<<<<<");
+		System.out.println(">>>>>>>> RH: SolicitaÃ§Ã£o recusada retornada para chefia <<<<<<<<<<<<<");
 	}
 
 	@Override

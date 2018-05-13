@@ -14,7 +14,7 @@ public class NovaSolicitacao implements Status {
 	@Override
 	public void solicitar() {
 		this.solicitacao.setStatus(new AguardandoChefia(solicitacao));
-		System.out.println(">>>>>>>> Solicitação enviada para chefia <<<<<<<<<<<<<");
+		System.out.println(">>>>>>>> SolicitaÃ§Ã£o enviada para chefia <<<<<<<<<<<<<");
 	}
 
 	@Override

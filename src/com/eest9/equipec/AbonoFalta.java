@@ -12,7 +12,7 @@ public class AbonoFalta {
 		
 		Funcionario funcionarioSolicitante = new Funcionario();
 		funcionarioSolicitante.setId(1L);
-		funcionarioSolicitante.setNome("Jo„o Arthur");
+		funcionarioSolicitante.setNome("Jo√£o Arthur");
 		funcionarioSolicitante.setTipo(Tipo.NORMAL);
 		
 		Solicitacao solicitacaoAbono = new Solicitacao();

@@ -19,7 +19,7 @@ public class AguardandoChefia implements Status {
 	@Override
 	public void aprovar() {
 		this.solicitacao.setStatus(new AguardandoRH(this.solicitacao));
-		System.out.println(">>>>>>>> CHEFIA: Solicitação aprovada enviada para análise do RH <<<<<<<<<<<<<");
+		System.out.println(">>>>>>>> CHEFIA: SolicitaÃ§Ã£o aprovada enviada para anÃ¤lise do RH <<<<<<<<<<<<<");
 	}
 
 	@Override
