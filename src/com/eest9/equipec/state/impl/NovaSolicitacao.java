@@ -19,19 +19,19 @@ public class NovaSolicitacao implements Status {
 
 	@Override
 	public void aprovar() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
 	}
 
 	@Override
 	public void recusar() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
 	}
 
 	@Override
 	public void retornar(String motivo) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
 	}
 
