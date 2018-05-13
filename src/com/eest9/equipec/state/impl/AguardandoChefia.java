@@ -13,7 +13,7 @@ public class AguardandoChefia implements Status {
 
 	@Override
 	public void solicitar() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override
@@ -24,13 +24,14 @@ public class AguardandoChefia implements Status {
 
 	@Override
 	public void recusar() {
-		// TODO Auto-generated method stub
+               this.solicitacao.setStatus(new Recusada());
+               System.out.println(">>>>>>>> CHEFIA: Solicitação recusada <<<<<<<<<<<<<");
 
 	}
 
 	@Override
 	public void retornar(String motivo) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
 	}
 

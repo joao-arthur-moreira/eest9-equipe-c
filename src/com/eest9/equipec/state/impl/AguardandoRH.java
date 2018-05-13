@@ -13,25 +13,28 @@ public class AguardandoRH implements Status {
 	
 	@Override
 	public void solicitar() {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
 	}
 
 	@Override
 	public void aprovar() {
-		this.solicitacao.setStatus(null);
+		this.solicitacao.setStatus(new Aprovada());
 		System.out.println(">>>>>>>> RH: Solicitação aprovada pelo RH <<<<<<<<<<<<<");
 	}
 
 	@Override
 	public void recusar() {
-		this.solicitacao.setStatus(new AguardandoChefia(solicitacao));
+		this.solicitacao.setStatus( new Recusada());
 		System.out.println(">>>>>>>> RH: Solicitação recusada retornada para chefia <<<<<<<<<<<<<");
 	}
 
 	@Override
 	public void retornar(String motivo) {
-		// TODO Auto-generated method stub
+                // Ajusta o motivo do retorno
+                this.solicitacao.setObservacao(motivo);
+                this.solicitacao.setStatus( new AguardandoChefia(this.solicitacao));
+		System.out.println(">>>>>>>> RH: Solicitação retornada para chefia <<<<<<<<<<<<<");
 
 	}
 
