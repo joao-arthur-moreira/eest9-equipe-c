@@ -6,7 +6,7 @@
 package atividade.aula.extra;
 
 /**
- *
+ * marciusbrandao@gmail.com
  * @author vitor
  */
 public class Solicitacao {
