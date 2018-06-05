@@ -10,6 +10,7 @@ import entities.annotations.PropertyDescriptor;
 import entities.annotations.View;
 import entities.annotations.Views;
 import java.io.Serializable;
+//import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -17,6 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+//import javax.persistence.Version;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
@@ -51,6 +53,9 @@ public class Cliente implements Serializable {
 
     @Embedded
     private Credito credito;
+    
+//    @Version
+//    private Timestamp dataCad;
 
     @OneToMany(mappedBy = "cliente")
     private List<ContaReceber> contasReceber;

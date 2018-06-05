@@ -33,22 +33,39 @@ public class PedidoVendaItem implements Serializable {
     @Column(precision = 4, scale = 2)
     private double total;
 
-    public PedidoVendaItem(PedidoVenda _pedido) {
-        pedido = _pedido;
-        
-    }
-    
-    
-
     public String apagar() {
-        throw new NotImplementedException();
+        // Decrementando os valores do pedido
+        pedido.setTotal(pedido.getTotal()- this.total);
+        pedido.setQtdItens(pedido.getQtdItens() -1 );
+        // Removendo o item 
+        pedido.getItens().remove(this);
+        return "Item excluído com êxito!";
     }
 
     public String editar(
             @ParameterDescriptor(displayName = "Selecione o produto",
                     required = true) Produto produto, 
             @ParameterDescriptor(displayName = "Informe a nova quantidade" ) double qtd) {
-        throw new NotImplementedException();
+        // Não permite venda com quantidade zerada
+        if ( qtd == 0 ){
+            throw new IllegalStateException("A quantidade precisa ser maior do que zero!");
+        }
+        // Não permite venda com preço zerado
+        if (produto.getPreco() <= 0 ){
+            throw new IllegalStateException("Não pode incluir produto com preço zero!");
+        }
+        double total = qtd * produto.getPreco();
+        // Decrementando os valores do pedido
+        pedido.setTotal(pedido.getTotal()- this.total);
+        // Incrementando os valores para atualizar o saldo
+        pedido.setTotal(pedido.getTotal() + total);
+        
+        // Atualizando o pedido atual
+        this.total = total;
+        this.produto = produto;
+        
+        return "Produto editado com êxito!";
+        
     }
 
     public Long getId() {

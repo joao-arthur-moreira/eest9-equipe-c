@@ -33,6 +33,8 @@ public class ContaReceber implements Serializable {
     @Column(precision = 4, scale = 2, nullable = false)
     private double valorPago;
     
+    
+    
     public double valorFalta(){
         return valor - valorPago;
     }

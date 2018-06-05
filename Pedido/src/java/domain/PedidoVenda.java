@@ -5,6 +5,8 @@
  */
 package domain;
 
+import entities.Repository;
+import entities.annotations.ActionDescriptor;
 import entities.annotations.Param;
 import entities.annotations.ParameterDescriptor;
 import entities.annotations.View;
@@ -57,6 +59,7 @@ import org.apache.commons.lang.NotImplementedException;
                             + "[#cliente;*id,#data;];"
                             + "Itens[adicionaItem();"
                             + "itens<produto.nome,qtd,total,apagar(),editar()>];"
+                            + "[registrar(),cancelar()];"
                             + "[qtdItens,total]"
                             + "]"
                                       
@@ -72,7 +75,7 @@ public class PedidoVenda implements Serializable {
     @ManyToOne
     private Cliente cliente;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ContaReceber contaReceber;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
@@ -94,6 +97,8 @@ public class PedidoVenda implements Serializable {
         cliente = new Cliente();
         itens = new ArrayList<PedidoVendaItem>();
         data = new Date();
+        status = StatusPedidoVenda.Novo;
+        contaReceber = new ContaReceber();
     }
     
     private boolean produtoNoPedido(Produto produto){
@@ -224,5 +229,20 @@ public class PedidoVenda implements Serializable {
         return true;
     }
     
+    @ActionDescriptor(
+            confirm = true,
+            confirmMessage = "Deseja realmente persistir as alterações?"
+    )
+    public String registrar(){
+        return this.status.gravarNovo(this);
+    }
+    
+    @ActionDescriptor(
+             confirm = true,
+            confirmMessage = "Deseja realmente cancelar?"
+    )
+    public String cancelar(){
+        return this.status.cancelar(this);
+    }
     
 }

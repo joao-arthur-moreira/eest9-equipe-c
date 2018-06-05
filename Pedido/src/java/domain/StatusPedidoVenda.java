@@ -16,25 +16,25 @@ public enum StatusPedidoVenda implements IStatusPedidoVenda {
     PagoParcial(new StatusPedidoPagoParcial()),
     PendentePagamento(new StatusPedidoPendentePagamento());
 
-    private IStatusPedidoVenda status;
+    private final IStatusPedidoVenda status;
 
     StatusPedidoVenda(IStatusPedidoVenda status) {
         this.status = status;
     }
 
     @Override
-    public String cancelar() {
+    public String cancelar(PedidoVenda pedido) {
+        return status.cancelar(pedido);
+    }
+
+    @Override
+    public String pagar(PedidoVenda pedido) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String pagar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String gravarNovo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String gravarNovo(PedidoVenda pedido) {
+        return status.gravarNovo(pedido);
     }
 
 }

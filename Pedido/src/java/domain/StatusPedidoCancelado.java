@@ -12,17 +12,17 @@ package domain;
 public class StatusPedidoCancelado implements IStatusPedidoVenda {
 
     @Override
-    public String cancelar() {
+    public String cancelar(PedidoVenda pedido) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String pagar() {
+    public String pagar(PedidoVenda pedido) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String gravarNovo() {
+    public String gravarNovo(PedidoVenda pedido) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
