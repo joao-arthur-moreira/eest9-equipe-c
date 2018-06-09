@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <!--    <session-factory>
+        <property name="hibernate.connection.datasource">java:comp/env/jdbc/ds-blank</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>        
+    </session-factory>-->
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost/pedidovenda</property>
+    <!-- BD Mane -->
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <!-- DB Driver -->
+    <property name="connection.username">postgres</property>
+    <!-- DB User -->
+    <property name="connection.password">COLOQUE_SUA_SENHA</property>
+    <!-- DB Password -->
+    <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <!-- DB Dialect -->
+    <property name="hbm2ddl.auto">update</property>
+    <!-- create / create-drop / update -->
+    <property name="show_sql">true</property>
+    <!-- Show SQL in console -->
+    <property name="format_sql">true</property>
+    <!-- Show SQL formatted -->
+    <property name="hibernate.current_session_context_class">thread</property>
+    <!--<mapping class="beans.Task"/>-->
+    <property name="hibernate.use_sql_comments">true</property>
+  </session-factory>
+</hibernate-configuration>

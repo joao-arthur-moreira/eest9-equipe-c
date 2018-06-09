@@ -1,3 +1,4 @@
+postgresql-42.2.2.jar
 *.class
 .DS_Store
 Servers/*
@@ -10,3 +11,4 @@ target/
 build
 bin
 *.tern-project
+nb-configuration.xml
