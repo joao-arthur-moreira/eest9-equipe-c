@@ -28,8 +28,8 @@ public enum StatusPedidoVenda implements IStatusPedidoVenda {
     }
 
     @Override
-    public String pagar(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String pagar(PedidoVenda pedido, double valor) {
+        return status.pagar(pedido, valor);
     }
 
     @Override

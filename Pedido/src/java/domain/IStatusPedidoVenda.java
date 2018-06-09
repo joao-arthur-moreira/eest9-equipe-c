@@ -11,6 +11,6 @@ package domain;
  */
 public interface IStatusPedidoVenda {
     public String cancelar(PedidoVenda pedido);
-    public String pagar(PedidoVenda pedido);
+    public String pagar(PedidoVenda pedido, double valor);
     public String gravarNovo(PedidoVenda pedido);
 }

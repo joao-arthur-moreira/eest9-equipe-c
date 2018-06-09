@@ -5,6 +5,8 @@
  */
 package domain;
 
+import service.PagamentoService;
+
 public class StatusPedidoPagoParcial implements IStatusPedidoVenda {
 
     @Override
@@ -13,8 +15,8 @@ public class StatusPedidoPagoParcial implements IStatusPedidoVenda {
     }
 
     @Override
-    public String pagar(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String pagar(PedidoVenda pedido, double valor) {
+        return PagamentoService.Pagar(pedido, valor);
     }
 
     @Override

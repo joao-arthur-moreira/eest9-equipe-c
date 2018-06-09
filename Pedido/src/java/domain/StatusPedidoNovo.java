@@ -19,7 +19,7 @@ public class StatusPedidoNovo implements IStatusPedidoVenda {
     }
 
     @Override
-    public String pagar(PedidoVenda pedido) {
+    public String pagar(PedidoVenda pedido, double valor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

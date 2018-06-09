@@ -16,3 +16,4 @@ build
 bin
 *.tern-project
 /nbproject/private/
+/Pedido/dist/

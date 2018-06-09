@@ -6,12 +6,17 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
@@ -33,11 +38,23 @@ public class ContaReceber implements Serializable {
     @Column(precision = 4, scale = 2, nullable = false)
     private double valorPago;
     
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Pagamentos> pagamentos;
     
+    @Transient
+    private double valorFalta;
     
-    public double valorFalta(){
+    public double getValorFalta(){
         return valor - valorPago;
     }
+
+    public ContaReceber() {
+        pagamentos = new ArrayList<Pagamentos>();
+    }
+    
+   
+    
+   
     
     public String pagar(double valor){
         throw new NotImplementedException();
@@ -107,6 +124,16 @@ public class ContaReceber implements Serializable {
         }
         return true;
     }
+
+    public List<Pagamentos> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamentos> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
+    
+    
     
     
 }
