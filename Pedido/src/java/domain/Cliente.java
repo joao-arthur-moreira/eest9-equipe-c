@@ -36,7 +36,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
         {
             @View(
                     name = "CadastroCliente",
-                    title = "Cadastro de Clientes",
+                    title = "Listagem de Clientes",
                     filters = "nome,cnpj,enderecoCliente.cidade",
                     header = "",
                     members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*enderecoCliente.cidade,listarPedidosDoCliente(),editar(),excluir()",
@@ -86,7 +86,6 @@ import org.hibernate.validator.constraints.br.CNPJ;
                             + "#enderecoCliente.endereco,#enderecoCliente.numero;"
                             + "#enderecoCliente.bairro,#enderecoCliente.cidade;"
                             + "#enderecoCliente.uf,#enderecoCliente.cep"
-//                            + "#enderecoCliente.cep"
                             + "];"
                     + "'Contato'["
                             + "#contato.telefone1, #contato.telefone1WhatsApp;"
