@@ -5,6 +5,8 @@
  */
 package domain;
 
+import entities.annotations.View;
+import entities.annotations.Views;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,15 @@ import javax.persistence.ManyToOne;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
+@Views(
+        {@View(
+            hidden = true,
+            title = "Cadastro de pagamentos",
+            name = "cadPagamentos",
+            members = ""
+            
+        )}
+)
 public class Pagamentos implements Serializable {
     @Id 
     @GeneratedValue

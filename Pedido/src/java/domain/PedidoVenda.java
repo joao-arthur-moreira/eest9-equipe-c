@@ -1,25 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 import entities.Context;
 import entities.annotations.ActionDescriptor;
 import entities.annotations.Param;
 import entities.annotations.ParameterDescriptor;
+import entities.annotations.PropertyDescriptor;
 import entities.annotations.View;
 import entities.annotations.Views;
-import entities.gui.jsf.ContextManagedBean;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +23,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -43,9 +39,11 @@ import javax.validation.constraints.NotNull;
 @Views(
         {
             @View(
+                    hidden = true,
                     name = "listaPedidosCliente",
-                    title = "Listagem de pedidos por cliente",
-                    members = "id,cliente.nome,data,qtdItens,status,total",
+                    title = "Listagem de pedidos do cliente '#{currentCliente}'",
+                    members
+                    = "[id,cliente.nome,data,qtdItens,status,total,exibirDetalhes()]",
                     namedQuery = "From PedidoVenda p Where p.cliente = :cliente Order by p.id ",
                     params = {
                         @Param(name = "cliente", value = "#{currentCliente}")},
@@ -59,24 +57,25 @@ import javax.validation.constraints.NotNull;
                     filters = "data,cliente,status",
                     members
                     = "id,cliente.nome,data,qtdItens,status,total,exibirDetalhes()",
-                     namedQuery = "From PedidoVenda p  Order by p.id ",
+                    namedQuery = "From PedidoVenda p  Order by p.id ",
                     rows = 10,
                     template = "@PAGE+@FILTER"
             )
             ,
             @View(
                     name = "detalhePedido",
+                    hidden = true,
                     title = "Detalhe do pedido",
                     namedQuery = "From PedidoVenda p Where p.id = :id",
                     params = {
-                        @Param( name = "id", value = "#{$_PEDIDO_VENDA}")},
+                        @Param(name = "id", value = "#{$_PEDIDO_VENDA}")},
                     members = "["
-                            + "Pedido[id,cliente.nome,qtdItens,total];"
-                            + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
-                            + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
-                            + "contaReceber.pagamentos<valor>"
-                            + "]"
-                            + "]"
+                    + "Pedido[id,cliente.nome,qtdItens,total];"
+                    + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
+                    + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
+                    + "contaReceber.pagamentos<valor>"
+                    + "]"
+                    + "]"
             )
             ,
             @View(
@@ -98,6 +97,7 @@ public class PedidoVenda implements Serializable {
 
     @Id
     @GeneratedValue
+    @PropertyDescriptor(displayName = "Número")
     private Long id;
 
     @ManyToOne
@@ -106,7 +106,8 @@ public class PedidoVenda implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private ContaReceber contaReceber;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido",
+            fetch = FetchType.LAZY, orphanRemoval = true)
     private List<PedidoVendaItem> itens;
 
     @NotNull
@@ -120,6 +121,9 @@ public class PedidoVenda implements Serializable {
 
     @Column(nullable = false)
     private StatusPedidoVenda status;
+
+    @Version
+    private Timestamp dataCadastro;
 
     public PedidoVenda() {
         cliente = new Cliente();
@@ -153,11 +157,11 @@ public class PedidoVenda implements Serializable {
         if (produtoNoPedido(produto)) {
             throw new IllegalStateException("O produto já consta no pedido!");
         }
-        
+
         double total_item = qtd * produto.getPreco();
         double total_pedido = total + total_item;
-        
-        if ( total_pedido > 1000 ){
+
+        if (total_pedido > 1000) {
             throw new IllegalStateException("O pedido ultrapassa o valor de R$ 1.000,00!");
         }
 
@@ -237,6 +241,10 @@ public class PedidoVenda implements Serializable {
         this.status = status;
     }
 
+    public Timestamp getDataCadastro() {
+        return dataCadastro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -280,16 +288,19 @@ public class PedidoVenda implements Serializable {
 
     public String exibirDetalhes() {
         Context.setValue("$_PEDIDO_VENDA", this.id);
-//        System.out.print("ID: => ");
-//        System.out.println( Context.getValue("$_PEDIDO_VENDA"));
-        //ContextManagedBean cnt = new ContextManagedBean();
         return "go:domain.PedidoVenda@detalhePedido";
     }
-    
+
     public String executarPagamento(
-         @ParameterDescriptor(displayName = "Valor a ser pago", required = true)   
-                 double valor){
+            @ParameterDescriptor(displayName = "Valor a ser pago", required = true) double valor) {
         return this.status.pagar(this, valor);
     }
+
+    @Override
+    public String toString() {
+        return id.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }

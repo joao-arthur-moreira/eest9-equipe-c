@@ -6,6 +6,7 @@
 package domain;
 
 import entities.Repository;
+import service.LimiteCreditoClienteService;
 
 /**
  *
@@ -25,6 +26,11 @@ public class StatusPedidoNovo implements IStatusPedidoVenda {
 
     @Override
     public String gravarNovo(PedidoVenda pedido) {
+        // Verificando se o cliente possuí saldo suficiente
+        double credito = LimiteCreditoClienteService.consultaLimiteCreditoDisponivel(pedido.getCliente());
+        if ( credito < pedido.getTotal() ){
+            throw new IllegalStateException("O cliente não possui saldo suficiente para realizar o pedido.");
+        }
         // Adicionando o contas a receber 
         ContaReceber receber = new ContaReceber();
         receber.setCliente(pedido.getCliente());

@@ -5,6 +5,8 @@
  */
 package domain;
 
+import entities.annotations.View;
+import entities.annotations.Views;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,16 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
+@Views(
+        {
+            @View (
+                    hidden = true,
+                    title = "Contas a receber",
+                    name = "contaReceber",
+                    members = ""
+            )
+        }
+)
 public class ContaReceber implements Serializable {
 
     @Id

@@ -10,7 +10,6 @@ import entities.annotations.PropertyDescriptor;
 import entities.annotations.View;
 import entities.annotations.Views;
 import java.io.Serializable;
-//import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -18,7 +17,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-//import javax.persistence.Version;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
@@ -27,8 +25,8 @@ import org.apache.commons.lang.NotImplementedException;
             @View(
                     name = "CadastroCliente",
                     title = "Cadastro de Clientes",
-                    filters = "nome,cnpj",
-                    members = "nome,cnpj,credito.limite,*credito.utilizado,listarPedidosDoCliente(),contasReceber",
+                    filters = "nome,cnpj,endereco.cidade",
+                    members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*endereco.cidade,listarPedidosDoCliente(),contasReceber",
                     namedQuery = "From Cliente p Order by p.nome ",
                     rows = 10,
                     template = "@PAGE+@CRUD+@FILTER"
@@ -39,6 +37,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue
+    @PropertyDescriptor(displayName = "Número")
     private Long id;
 
     @PropertyDescriptor(displayWidth = 50)
@@ -53,9 +52,9 @@ public class Cliente implements Serializable {
 
     @Embedded
     private Credito credito;
-    
-//    @Version
-//    private Timestamp dataCad;
+
+    @Embedded
+    private EnderecoCliente endereco;
 
     @OneToMany(mappedBy = "cliente")
     private List<ContaReceber> contasReceber;
@@ -63,8 +62,6 @@ public class Cliente implements Serializable {
     public Cliente() {
         credito = new Credito();
     }
-    
-    
 
     public static List<Cliente> buscaClientes(String pesquisa) {
         throw new NotImplementedException();
@@ -142,17 +139,23 @@ public class Cliente implements Serializable {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-    
-    public String listarPedidosDoCliente(){
+
+    public String listarPedidosDoCliente() {
         Context.setValue("currentCliente", this);
-        
-//        Context.getValue(nome)
         return "go:domain.PedidoVenda@listaPedidosCliente";
     }
 
     @Override
     public String toString() {
         return nome;
+    }
+
+    public EnderecoCliente getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(EnderecoCliente endereco) {
+        this.endereco = endereco;
     }
     
     

@@ -6,15 +6,26 @@
 package domain;
 
 import entities.annotations.ParameterDescriptor;
+import entities.annotations.View;
+import entities.annotations.Views;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import org.apache.commons.lang.NotImplementedException;
 
 @Entity
+@Views(
+        {
+            @View(
+                    hidden = true,
+                    name = "pedidoVendaItem",
+                    title = "Pedido de Venda",
+                    members = ""
+            )
+        }
+)
 public class PedidoVendaItem implements Serializable {
 
     @Id
@@ -35,8 +46,8 @@ public class PedidoVendaItem implements Serializable {
 
     public String apagar() {
         // Decrementando os valores do pedido
-        pedido.setTotal(pedido.getTotal()- this.total);
-        pedido.setQtdItens(pedido.getQtdItens() -1 );
+        pedido.setTotal(pedido.getTotal() - this.total);
+        pedido.setQtdItens(pedido.getQtdItens() - 1);
         // Removendo o item 
         pedido.getItens().remove(this);
         return "Item excluído com êxito!";
@@ -44,28 +55,28 @@ public class PedidoVendaItem implements Serializable {
 
     public String editar(
             @ParameterDescriptor(displayName = "Selecione o produto",
-                    required = true) Produto produto, 
-            @ParameterDescriptor(displayName = "Informe a nova quantidade" ) double qtd) {
+                    required = true) Produto produto,
+            @ParameterDescriptor(displayName = "Informe a nova quantidade") double qtd) {
         // Não permite venda com quantidade zerada
-        if ( qtd == 0 ){
+        if (qtd == 0) {
             throw new IllegalStateException("A quantidade precisa ser maior do que zero!");
         }
         // Não permite venda com preço zerado
-        if (produto.getPreco() <= 0 ){
+        if (produto.getPreco() <= 0) {
             throw new IllegalStateException("Não pode incluir produto com preço zero!");
         }
         double total = qtd * produto.getPreco();
         // Decrementando os valores do pedido
-        pedido.setTotal(pedido.getTotal()- this.total);
+        pedido.setTotal(pedido.getTotal() - this.total);
         // Incrementando os valores para atualizar o saldo
         pedido.setTotal(pedido.getTotal() + total);
-        
+
         // Atualizando o pedido atual
         this.total = total;
         this.produto = produto;
-        
+
         return "Produto editado com êxito!";
-        
+
     }
 
     public Long getId() {
@@ -132,6 +143,5 @@ public class PedidoVendaItem implements Serializable {
         }
         return true;
     }
-    
-    
+
 }

@@ -5,10 +5,10 @@
  */
 package domain;
 
-import entities.Repository;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import org.apache.commons.lang.NotImplementedException;
 
 @Embeddable
@@ -19,6 +19,9 @@ public class Credito implements Serializable {
 
     @Column(precision = 4, scale = 2, nullable = false)
     private double utilizado;
+    
+    @Transient
+    private double disponivel;
 
     public boolean limiteDisponivel(double valor) {
         throw new NotImplementedException();
@@ -36,12 +39,7 @@ public class Credito implements Serializable {
     }
 
     public void adicionaSaldo(Double valor) {
-//       String sql = "Update cliente set utilizado = utilizado + " + valor.toString() +
-//                " where id = :id" ;
-//        Repository.executeUpdate(
-//                sql,idCliente);
         this.utilizado+= valor;
-        //throw new NotImplementedException();
     }
 
     public double getLimite() {
@@ -58,6 +56,10 @@ public class Credito implements Serializable {
 
     public void setUtilizado(double utilizado) {
         this.utilizado = utilizado;
+    }
+    
+    public double getDisponivel(){
+        return limite - utilizado;
     }
     
     
