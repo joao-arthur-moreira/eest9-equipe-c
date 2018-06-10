@@ -9,12 +9,15 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.NotImplementedException;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Embeddable
 public class Credito implements Serializable {
 
     @Column(precision = 4, scale = 2, nullable = false)
+    @NotNull
     private double limite;
 
     @Column(precision = 4, scale = 2, nullable = false)

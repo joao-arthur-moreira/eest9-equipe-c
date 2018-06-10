@@ -22,8 +22,16 @@ public class EnderecoCliente implements Serializable {
     @Column ( length = 50 )
     private String cidade;
     
-    @Column ( length = 2 )
+    @Column ( length = 2)
     private String uf;
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
     
     @Column ( length = 8)
     private String cep;
@@ -60,13 +68,7 @@ public class EnderecoCliente implements Serializable {
         this.cidade = cidade;
     }
 
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
+   
 
     public String getCep() {
         return cep;
@@ -75,6 +77,9 @@ public class EnderecoCliente implements Serializable {
     public void setCep(String cep) {
         this.cep = cep;
     }
+
+    
+    
     
     
     
