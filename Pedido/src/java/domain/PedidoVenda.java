@@ -17,16 +17,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@SequenceGenerator(name = "GEN_PEDIDO_VENDA",sequenceName = "GEN_PEDIDO_VENDA")
 @NamedQueries({
     @NamedQuery(
             name = "buscaPedidosPorCliente",
@@ -96,7 +99,7 @@ import javax.validation.constraints.NotNull;
 public class PedidoVenda implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (generator = "GEN_PEDIDO_VENDA",strategy = GenerationType.AUTO)
     @PropertyDescriptor(displayName = "Número")
     private Long id;
 
