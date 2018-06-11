@@ -28,6 +28,10 @@ public class StatusPedidoNovo implements IStatusPedidoVenda {
 
     @Override
     public String gravarNovo(PedidoVenda pedido) {
+        // Verifica se existe algum item digitado 
+        if ( pedido.getItens().isEmpty() ){
+            throw new IllegalStateException("O pedido não contém nenhum item digitado.");
+        }
         // Verificando se o cliente possuí saldo suficiente
         double credito = LimiteCreditoClienteService.consultaLimiteCreditoDisponivel(pedido.getCliente());
         if ( credito < pedido.getTotal() ){
