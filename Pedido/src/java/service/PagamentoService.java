@@ -17,6 +17,11 @@ import java.util.List;
  * @author vitor
  */
 public class PagamentoService {
+    /**
+     * Adiciona um novo pagamento para o contas a receber de um pedido
+     * @param pedido
+     * @param valor 
+     */
     private static void adicionarPagamento( PedidoVenda pedido, double valor){
         ContaReceber contaReceber = pedido.getContaReceber();
         List<Pagamentos> listPgamentos = contaReceber.getPagamentos();
@@ -39,6 +44,14 @@ public class PagamentoService {
         Repository.getInstance().add(contaReceber.getCliente());
     }
     
+    /**
+     * Adiciona um novo pagamento a um conta a receber. Caso o valor pago
+     * seja igual ao valor pendente, o pedido será atualizado para o status Pago,
+     * do contrário o pedido será atualizado para o status PagoParical
+     * @param pedido
+     * @param valor
+     * @return 
+     */
     public static String Pagar( PedidoVenda pedido, double valor ){
         double valorFalta = DoubleToStr.twoPlaces(
                 pedido.getContaReceber().getValorFalta());
@@ -61,6 +74,12 @@ public class PagamentoService {
         
     }
     
+    /**
+     * Altera o status de um pedido para Cancelado e realiza o pagamento 
+     * para o retorno do saldo do cliente.
+     * @param pedido
+     * @return 
+     */
     public static String Cancelar( PedidoVenda pedido ){
         double valorFalta = DoubleToStr.twoPlaces(
                 pedido.getContaReceber().getValorFalta());

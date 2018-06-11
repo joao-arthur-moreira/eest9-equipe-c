@@ -13,6 +13,12 @@ import entities.Repository;
  * @author vitor
  */
 public class LimiteCreditoClienteService {
+    /**
+     * Executa uma consulta no banco e traz o valor atual do limite disponível
+     * de um cliente
+     * @param cliente
+     * @return 
+     */
     public static double consultaLimiteCreditoDisponivel(Cliente cliente){
         
         if (  cliente.getId() == null ){
@@ -27,6 +33,12 @@ public class LimiteCreditoClienteService {
         
     }
     
+    /**
+     * Atualiza o saldo do limeite de crédito de um cliente adicionando um valor
+     * (Para subtrair o saldo utilize valor negativo)
+     * @param cliente
+     * @param valor 
+     */
     public static void atualizaLimiteCreditoCliente(Cliente cliente, double valor){
         if (  cliente.getId() == null ){
              throw new IllegalStateException("Cliente inválido!");
