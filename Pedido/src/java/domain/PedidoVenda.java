@@ -77,14 +77,25 @@ import service.DoubleToStr;
                     params = {
                         @Param(name = "id", value = "#{ID_PEDIDO_VENDA}")},
                     members = "["
-                            + "[novoPedido(),listarPedidos(),executarPagamento()];"
-                    + "Pedido[id,cliente.nome,qtdItens,total];"
-                    + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
-                    + "Financeiro["
-                            + "[*contaReceber.valorPago,*contaReceber.valorFalta];"
-                    + "contaReceber.pagamentos<dataHora,valor>"
-                    + "]"
-                    + "]"
+                            + " [novoPedido(),listarPedidos(),executarPagamento()];"
+                            + " Pedido["
+                            + "         [id,cliente.nome,qtdItens,total];"
+                            + "         [status];"
+                            + "];"
+                            + " 'Dados cliente'-["
+                            + "     *cliente.credito.utilizado, *cliente.credito.limite, *cliente.credito.disponivel;"
+                            + "     *cliente.enderecoCliente.endereco, *cliente.enderecoCliente.numero, "
+                            + "     *cliente.enderecoCliente.bairro; *cliente.enderecoCliente.cidade,*cliente.enderecoCliente.uf,"
+                            + "     *cliente.enderecoCliente.cep;"
+                            + "     *cliente.contato.telefone1,*cliente.contato.telefone1WhatsApp,*cliente.contato.telefone2,*cliente.contato.telefone2WhatsApp;"
+                            + "     *cliente.contato.email"
+                            + " ];"
+                            + " 'Itens'+[itens<produto.codigo,produto.nome,qtd,unitario,total>];"
+                            + " Financeiro-["
+                            + "             [*contaReceber.valorPago,*contaReceber.valorFalta];"
+                            + "             contaReceber.pagamentos<dataHora,valor>"
+                            + "        ]"
+                            + "]"
             )
             ,
             @View(
@@ -92,9 +103,10 @@ import service.DoubleToStr;
                     title = "Cadastrar pedido",
                     namedQuery = "Select new domain.PedidoVenda()",
                     members = "["
-                    + "[#cliente;*id,#data;];"
-                    + "Itens[adicionaItem();"
-                    + "itens<produto.nome,qtd,total,apagar(),editar()>];"
+                    + "' '[#cliente;*id,#data;];"
+                    + "' '[Itens[adicionaItem();"
+                    + "itens<produto.nome,qtd,unitario,total,apagar(),editar()>]"
+                            + "];"
                     + "[registrar(),cancelar()];"
                     + "[qtdItens,total]"
                     + "]"

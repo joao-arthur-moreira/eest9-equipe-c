@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import service.DoubleToStr;
 
 @Entity
@@ -44,6 +45,9 @@ public class PedidoVendaItem implements Serializable {
 
     @Column(precision = 4, scale = 2)
     private double total;
+    
+    @Transient
+    private double unitario;
 
     public String apagar() {
         // Decrementando os valores do pedido
@@ -144,5 +148,11 @@ public class PedidoVendaItem implements Serializable {
         }
         return true;
     }
+
+    public double getUnitario() {
+        return DoubleToStr.threePlaces(total / qtd);
+    }
+    
+    
 
 }
