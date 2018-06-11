@@ -76,7 +76,7 @@ import javax.validation.constraints.NotNull;
                     + "Pedido[id,cliente.nome,qtdItens,total];"
                     + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
                     + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
-                    + "contaReceber.pagamentos<valor>"
+                    + "contaReceber.pagamentos<dataCadastro,valor>"
                     + "]"
                     + "]"
             )

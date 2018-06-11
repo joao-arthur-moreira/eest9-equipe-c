@@ -23,7 +23,7 @@ public class StatusPedidoPago implements IStatusPedidoVenda {
 
     @Override
     public String gravarNovo(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new IllegalStateException("O pedido de venda já foi gravado."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -39,7 +39,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
                     title = "Listagem de Clientes",
                     filters = "nome,cnpj,enderecoCliente.cidade",
                     header = "",
-                    members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*enderecoCliente.cidade,listarPedidosDoCliente(),editar(),excluir()",
+                    members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*enderecoCliente.cidade,'Ações'[listarPedidosDoCliente(),editar(),excluir()]",
                     namedQuery = "From Cliente p Order by p.nome ",
                     rows = 10,
                     template = "@PAGE+@FILTER"

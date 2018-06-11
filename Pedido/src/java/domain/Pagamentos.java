@@ -8,34 +8,41 @@ package domain;
 import entities.annotations.View;
 import entities.annotations.Views;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.apache.commons.lang.NotImplementedException;
 
 @Entity
 @Views(
-        {@View(
-            hidden = true,
-            title = "Cadastro de pagamentos",
-            name = "cadPagamentos",
-            members = ""
-            
-        )}
+        {
+            @View(
+                    hidden = true,
+                    title = "Cadastro de pagamentos",
+                    name = "cadPagamentos",
+                    members = ""
+            )}
 )
 public class Pagamentos implements Serializable {
-    @Id 
+
+    @Id
     @GeneratedValue
     private Long id;
-    
+
     @ManyToOne
     private ContaReceber contaReceber;
-    
-    
-    @Column( precision = 4, scale =2)
+
+    @Column(precision = 4, scale = 2)
     private double valor;
+
+   @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHora;
 
     public long getId() {
         return id;
@@ -53,20 +60,20 @@ public class Pagamentos implements Serializable {
         this.contaReceber = contaReceber;
     }
 
-//    public Timestamp getDataCadastro() {
-//        return dataCadastro;
-//    }
-//
-//    public void setDataCadastro(Timestamp dataCadastro) {
-//        this.dataCadastro = dataCadastro;
-//    }
-
     public double getValor() {
         return valor;
     }
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public Date getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
     }
 
     @Override
@@ -93,10 +100,8 @@ public class Pagamentos implements Serializable {
         }
         return true;
     }
-    
-    
-    
-    public String excluir(){
-         throw  new NotImplementedException();
+
+    public String excluir() {
+        throw new NotImplementedException();
     }
 }

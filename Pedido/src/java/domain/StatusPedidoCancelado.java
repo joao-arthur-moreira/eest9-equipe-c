@@ -13,17 +13,17 @@ public class StatusPedidoCancelado implements IStatusPedidoVenda {
 
     @Override
     public String cancelar(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new IllegalStateException("O pedido já econtra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String pagar(PedidoVenda pedido, double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new IllegalStateException("O pedido encontra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public String gravarNovo(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new IllegalStateException("O pedido encontra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
