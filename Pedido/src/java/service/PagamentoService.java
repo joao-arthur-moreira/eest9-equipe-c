@@ -21,7 +21,7 @@ public class PagamentoService {
         ContaReceber contaReceber = pedido.getContaReceber();
         List<Pagamentos> listPgamentos = contaReceber.getPagamentos();
         // vericar valor pago menor que falta
-        double valorFalta = contaReceber.getValorFalta();
+        double valorFalta = Double.parseDouble(String.format("%.2f",contaReceber.getValorFalta()).replace(",", ".") );
         if ( valor > valorFalta ){
             throw new IllegalStateException("O valor pago ultrapassa o valor que falta!");
         }
@@ -45,7 +45,7 @@ public class PagamentoService {
         adicionarPagamento(pedido, valor);
         
         // Atualizando o status do pedido de venda
-        if ( valor == valorFalta ){
+        if ( String.format("%.2f",valor).equals(String.format("%.2f",valorFalta)) ){
             pedido.setStatus(StatusPedidoVenda.Pago);
             Repository.getInstance().add(pedido);
             Repository.getInstance().persistAll();
