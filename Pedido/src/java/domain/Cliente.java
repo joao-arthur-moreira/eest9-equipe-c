@@ -42,7 +42,8 @@ import org.hibernate.validator.constraints.br.CNPJ;
                     members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*enderecoCliente.cidade,'Ações'[listarPedidosDoCliente(),editar(),excluir()]",
                     namedQuery = "From Cliente p Order by p.nome ",
                     rows = 10,
-                    template = "@PAGER+@FILTER"
+                    template = "@PAGER+@FILTER",
+                    roles = "Admin,Cadastro"
             )
             ,
             @View(
@@ -69,7 +70,8 @@ import org.hibernate.validator.constraints.br.CNPJ;
                     namedQuery = "Select c From Cliente c Where c = :cliente ",
                     params = {
                         @Param(name = "cliente", value = "#{CLIENTE_SELECIONADO}")},
-                    template = ""
+                    template = "",
+                    roles = "Admin,Cadastro"
             )
             ,
             @View(
@@ -93,7 +95,8 @@ import org.hibernate.validator.constraints.br.CNPJ;
                             + "#contato.email"
                             + "]"
                     + "]",
-                    template = ""
+                    template = "",
+                    roles = "Admin,Cadastro"
             )
         }
 )
@@ -274,6 +277,10 @@ public class Cliente implements Serializable {
             confirmMessage = "ATENÇÃO. Essa operação é irreversível. Deseja realmente excluír o item selecionado?"
     )
     public String excluir() {
+        // Verifica se existe algum pedido vinculado ao cliente
+        if ( Repository.queryCount("From domain.PedidoVenda v Where v.cliente = :cliente",this)>0){
+            throw new IllegalStateException("O cliente não pode ser excluído pois já contém pedidos emitidos para o mesmo.");
+        }
         Repository.delete(this);
         return "Registro excluído com êxito.";
     }

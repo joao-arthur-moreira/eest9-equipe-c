@@ -39,7 +39,8 @@ import org.hibernate.validator.constraints.NotBlank;
                     members = "nome,codigo,preco",
                     namedQuery = "From Produto p Order by p.nome ",
                     rows = 10,
-                    template = "@PAGER+@CRUD+@FILTER"
+                    template = "@PAGER+@CRUD+@FILTER",
+                    roles = "Admin,Cadastro"
             )
         }
 )

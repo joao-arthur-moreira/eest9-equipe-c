@@ -54,7 +54,8 @@ import service.DoubleToStr;
                     params = {
                         @Param(name = "cliente", value = "#{currentCliente}")},
                     rows = 10,
-                    template = "@PAGER+@CRUD+@FILTER"
+                    template = "@PAGER+@CRUD+@FILTER",
+                    roles = "Admin,Vendedor"
             )
             ,
             @View(
@@ -66,7 +67,8 @@ import service.DoubleToStr;
                             + "'Ações'[exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p  Order by p.id ",
                     rows = 10,
-                    template = "@PAGER+@FILTER"
+                    template = "@PAGER+@FILTER",
+                    roles = "Admin,Vendedor"
             )
             ,
             @View(
@@ -95,7 +97,8 @@ import service.DoubleToStr;
                             + "             [*contaReceber.valorPago,*contaReceber.valorFalta];"
                             + "             contaReceber.pagamentos<dataHora,valor>"
                             + "        ]"
-                            + "]"
+                            + "]",
+                    roles = "Admin,Vendedor"
             )
             ,
             @View(
@@ -109,7 +112,8 @@ import service.DoubleToStr;
                             + "];"
                     + "[registrar(),cancelar()];"
                     + "[qtdItens,total]"
-                    + "]"
+                    + "]",
+                    roles = "Admin,Vendedor"
             //                    template = ""
             )
         }
@@ -196,7 +200,7 @@ public class PedidoVenda implements Serializable {
         // Atualizando o total da venda
         qtdItens++;
         total = total_pedido;
-        return "Item adicionado com êxisto.";
+        return "Item adicionado com êxito.";
     }
 
     public Long getId() {

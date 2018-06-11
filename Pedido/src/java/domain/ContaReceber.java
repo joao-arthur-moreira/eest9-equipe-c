@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-import org.apache.commons.lang.NotImplementedException;
 import service.DoubleToStr;
 
 @Entity
