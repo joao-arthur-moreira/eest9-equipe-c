@@ -37,4 +37,17 @@ public enum StatusPedidoVenda implements IStatusPedidoVenda {
         return status.gravarNovo(pedido);
     }
 
+    @Override
+    public String toString() {
+        if ( status instanceof StatusPedidoPagoParcial){
+            return "Pago parcial";
+        }
+        if ( status instanceof StatusPedidoPendentePagamento){
+            return "Pendente de pagamento";
+        }
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+
 }
