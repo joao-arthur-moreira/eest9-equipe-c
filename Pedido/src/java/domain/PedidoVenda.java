@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import service.DoubleToStr;
 
 @Entity
 @SequenceGenerator(name = "GEN_PEDIDO_VENDA",sequenceName = "GEN_PEDIDO_VENDA")
@@ -45,6 +46,7 @@ import javax.validation.constraints.NotNull;
                     hidden = true,
                     name = "listaPedidosCliente",
                     title = "Listagem de pedidos do cliente '#{currentCliente}'",
+                    filters = "data,status",
                     members
                     = "id,cliente.nome,data,qtdItens,status,total,contaReceber.valorFalta,"
                             + "'Ações'[executarPagamento(),exibirDetalhes(),cancelar()]",
@@ -75,10 +77,11 @@ import javax.validation.constraints.NotNull;
                     params = {
                         @Param(name = "id", value = "#{ID_PEDIDO_VENDA}")},
                     members = "["
-                            + "[novoPedido(),listarPedidos()];"
+                            + "[novoPedido(),listarPedidos(),executarPagamento()];"
                     + "Pedido[id,cliente.nome,qtdItens,total];"
                     + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
-                    + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
+                    + "Financeiro["
+                            + "[*contaReceber.valorPago,*contaReceber.valorFalta];"
                     + "contaReceber.pagamentos<dataHora,valor>"
                     + "]"
                     + "]"
@@ -165,8 +168,8 @@ public class PedidoVenda implements Serializable {
             throw new IllegalStateException("O produto já consta no pedido!");
         }
 
-        double total_item = qtd * produto.getPreco();
-        double total_pedido = total + total_item;
+        double total_item = DoubleToStr.twoPlaces(qtd * produto.getPreco());
+        double total_pedido = DoubleToStr.twoPlaces( total + total_item);
 
         if (total_pedido > 1000) {
             throw new IllegalStateException("O pedido ultrapassa o valor de R$ 1.000,00!");
@@ -237,7 +240,7 @@ public class PedidoVenda implements Serializable {
     }
 
     public void setTotal(double total) {
-        this.total = total;
+        this.total = DoubleToStr.twoPlaces(total);
     }
 
     public StatusPedidoVenda getStatus() {

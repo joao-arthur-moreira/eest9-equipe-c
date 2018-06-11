@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import service.DoubleToStr;
 
 @Entity
 @Views(
@@ -108,7 +109,7 @@ public class PedidoVendaItem implements Serializable {
     }
 
     public void setQtd(double qtd) {
-        this.qtd = qtd;
+        this.qtd = DoubleToStr.threePlaces(qtd);
     }
 
     public double getTotal() {
@@ -116,7 +117,7 @@ public class PedidoVendaItem implements Serializable {
     }
 
     public void setTotal(double total) {
-        this.total = total;
+        this.total = DoubleToStr.twoPlaces(total);
     }
 
     @Override

@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.NotImplementedException;
-import org.hibernate.validator.constraints.NotEmpty;
+import service.DoubleToStr;
 
 @Embeddable
 public class Credito implements Serializable {
@@ -43,6 +43,7 @@ public class Credito implements Serializable {
 
     public void adicionaSaldo(Double valor) {
         this.utilizado+= valor;
+        this.utilizado = DoubleToStr.twoPlaces(this.utilizado);
     }
 
     public double getLimite() {
@@ -50,7 +51,7 @@ public class Credito implements Serializable {
     }
 
     public void setLimite(double limite) {
-        this.limite = limite;
+        this.limite = DoubleToStr.twoPlaces(limite);
     }
 
     public double getUtilizado() {
@@ -58,7 +59,7 @@ public class Credito implements Serializable {
     }
 
     public void setUtilizado(double utilizado) {
-        this.utilizado = utilizado;
+        this.utilizado = DoubleToStr.twoPlaces(utilizado);
     }
     
     public double getDisponivel(){

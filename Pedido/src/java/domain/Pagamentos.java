@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.apache.commons.lang.NotImplementedException;
+import service.DoubleToStr;
 
 @Entity
 @Views(
@@ -64,7 +65,7 @@ public class Pagamentos implements Serializable {
     }
 
     public void setValor(double valor) {
-        this.valor = valor;
+        this.valor = DoubleToStr.twoPlaces(valor);
     }
 
     public Date getDataHora() {

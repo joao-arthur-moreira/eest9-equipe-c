@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.apache.commons.lang.NotImplementedException;
+import service.DoubleToStr;
 
 @Entity
 @Views(
@@ -99,7 +100,7 @@ public class ContaReceber implements Serializable {
     }
 
     public void setValor(double  valor) {
-        this.valor = valor;
+        this.valor = DoubleToStr.twoPlaces(valor);
     }
 
     public double getValorPago() {

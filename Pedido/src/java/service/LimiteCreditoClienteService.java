@@ -23,7 +23,7 @@ public class LimiteCreditoClienteService {
                 + " From Cliente c "
                 + " Where c.id = :id";
         Double limite = Repository.queryUnique(sql, cliente.getId());
-        return limite;
+        return DoubleToStr.twoPlaces(limite);
         
     }
     
@@ -32,9 +32,10 @@ public class LimiteCreditoClienteService {
              throw new IllegalStateException("Cliente inválido!");
         }
         
+        
         String sql = "Update Cliente c set c.credito.utilizado = c.credito.utilizado + :valor "
                 + " Where c.id = :id";
         
-        Repository.executeUpdate(sql, valor,cliente.getId());
+        Repository.executeUpdate(sql, DoubleToStr.twoPlaces(valor),cliente.getId());
     }
 }
