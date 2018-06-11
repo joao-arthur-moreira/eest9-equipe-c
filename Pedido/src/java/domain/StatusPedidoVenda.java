@@ -23,13 +23,13 @@ public enum StatusPedidoVenda implements IStatusPedidoVenda {
     }
 
     @Override
-    public String cancelar(PedidoVenda pedido) {
-        return status.cancelar(pedido);
+    public String cancelar(PedidoVenda pedido, Usuario usuario) {
+        return status.cancelar(pedido,usuario);
     }
 
     @Override
-    public String pagar(PedidoVenda pedido, double valor) {
-        return status.pagar(pedido, valor);
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario) {
+        return status.pagar(pedido, valor,usuario);
     }
 
     @Override

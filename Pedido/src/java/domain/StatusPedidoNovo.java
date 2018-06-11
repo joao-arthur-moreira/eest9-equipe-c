@@ -16,13 +16,13 @@ import service.LimiteCreditoClienteService;
 public class StatusPedidoNovo implements IStatusPedidoVenda {
     
     @Override
-    public String cancelar(PedidoVenda pedido) {
+    public String cancelar(PedidoVenda pedido, Usuario usuario) {
           // Redireciona par a tela do cadastro de novo pedido
           return "go:domain.PedidoVenda@novoPedidoVenda";
     }
 
     @Override
-    public String pagar(PedidoVenda pedido, double valor) {
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario) {
         throw new IllegalStateException("O pedido ainda não foi gravado."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -9,6 +9,7 @@ import domain.ContaReceber;
 import domain.Pagamentos;
 import domain.PedidoVenda;
 import domain.StatusPedidoVenda;
+import domain.Usuario;
 import entities.Repository;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class PagamentoService {
      * @param pedido
      * @param valor 
      */
-    private static void adicionarPagamento( PedidoVenda pedido, double valor){
+    private static void adicionarPagamento( PedidoVenda pedido, double valor, Usuario usuario ){
         ContaReceber contaReceber = pedido.getContaReceber();
         List<Pagamentos> listPgamentos = contaReceber.getPagamentos();
         // vericar valor pago menor que falta
@@ -33,6 +34,7 @@ public class PagamentoService {
         // Adicionando o pagamento ao contas a receber
         Pagamentos pagamento = new Pagamentos();
         pagamento.setValor(valor);
+        pagamento.setUsuario(usuario);
         listPgamentos.add(pagamento);
         // Atualizando o saldo do conta receber
         contaReceber.setValorPago(contaReceber.getValorPago() + valor);
@@ -52,11 +54,11 @@ public class PagamentoService {
      * @param valor
      * @return 
      */
-    public static String Pagar( PedidoVenda pedido, double valor ){
+    public static String Pagar( PedidoVenda pedido, double valor, Usuario usuario ){
         double valorFalta = DoubleToStr.twoPlaces(
                 pedido.getContaReceber().getValorFalta());
         
-        adicionarPagamento(pedido, valor);
+        adicionarPagamento(pedido, valor, usuario);
         
         // Atualizando o status do pedido de venda
         if ( DoubleToStr.isEqualTwoPlaces(valor, valorFalta) ){
@@ -80,11 +82,11 @@ public class PagamentoService {
      * @param pedido
      * @return 
      */
-    public static String Cancelar( PedidoVenda pedido ){
+    public static String Cancelar( PedidoVenda pedido, Usuario usuario  ){
         double valorFalta = DoubleToStr.twoPlaces(
                 pedido.getContaReceber().getValorFalta());
         
-        adicionarPagamento(pedido, valorFalta);
+        adicionarPagamento(pedido, valorFalta, usuario);
         
         // Atualizando o status do pedido de venda
         pedido.setStatus(StatusPedidoVenda.Cancelado);

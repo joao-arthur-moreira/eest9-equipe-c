@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -43,6 +44,9 @@ public class Pagamentos implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHora;
+    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Usuario usuario;
 
     public long getId() {
         return id;
@@ -76,6 +80,16 @@ public class Pagamentos implements Serializable {
         this.dataHora = dataHora;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -107,6 +121,9 @@ public class Pagamentos implements Serializable {
 
     public Pagamentos() {
         dataHora = new Date();
+        usuario = new Usuario();
     }
+    
+    
 
 }

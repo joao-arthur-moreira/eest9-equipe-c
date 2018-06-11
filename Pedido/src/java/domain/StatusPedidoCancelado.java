@@ -12,12 +12,12 @@ package domain;
 public class StatusPedidoCancelado implements IStatusPedidoVenda {
 
     @Override
-    public String cancelar(PedidoVenda pedido) {
+    public String cancelar(PedidoVenda pedido, Usuario usuario) {
         throw new IllegalStateException("O pedido já econtra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String pagar(PedidoVenda pedido, double valor) {
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario) {
         throw new IllegalStateException("O pedido encontra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
 

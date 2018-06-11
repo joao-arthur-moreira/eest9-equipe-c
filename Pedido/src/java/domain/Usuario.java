@@ -67,7 +67,7 @@ import org.hibernate.validator.constraints.NotEmpty;
                     name = "Login",
                     title = "Login",
                     members = "[#userName;#password;login()]",
-                    template = "@CRUD+@TABLE+@PAGER",
+                    template = "",
                     namedQuery = "Select new domain.Usuario()",
                     roles = "NOLOGGED"
             )
@@ -98,6 +98,7 @@ public class Usuario implements Serializable {
     @Username
     @Column(length = 25, unique = true)
     @NotEmpty(message = "Insira o usuário")
+    @PropertyDescriptor(displayName = "Usuário")
     private String userName;
 
     @Column(length = 32)
@@ -231,6 +232,12 @@ public class Usuario implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.userName; //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
     
 }

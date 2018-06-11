@@ -48,7 +48,7 @@ import service.DoubleToStr;
                     title = "Listagem de pedidos do cliente '#{currentCliente}'",
                     filters = "data,status",
                     members
-                    = "id,cliente.nome,data,qtdItens,status,total,contaReceber.valorFalta,"
+                    = "id,cliente.nome,data,qtdItens,status,total,usuario.userName,contaReceber.valorFalta,"
                             + "'Ações'[executarPagamento(),exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p Where p.cliente = :cliente Order by p.id ",
                     params = {
@@ -63,7 +63,7 @@ import service.DoubleToStr;
                     title = "Listagem de pedidos",
                     filters = "data,cliente,status",
                     members
-                    = "id,cliente.nome,data,qtdItens,status,total,contaReceber.valorFalta,"
+                    = "id,cliente.nome,data,qtdItens,status,total,usuario.userName,contaReceber.valorFalta,"
                             + "'Ações'[exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p  Order by p.id ",
                     rows = 10,
@@ -82,7 +82,7 @@ import service.DoubleToStr;
                             + " [novoPedido(),listarPedidos(),executarPagamento()];"
                             + " Pedido["
                             + "         [id,cliente.nome,qtdItens,total];"
-                            + "         [status];"
+                            + "         [status,usuario.userName];"
                             + "];"
                             + " 'Dados cliente'-["
                             + "     *cliente.credito.utilizado, *cliente.credito.limite, *cliente.credito.disponivel;"
@@ -95,7 +95,7 @@ import service.DoubleToStr;
                             + " 'Itens'+[itens<produto.codigo,produto.nome,qtd,unitario,total>];"
                             + " Financeiro-["
                             + "             [*contaReceber.valorPago,*contaReceber.valorFalta];"
-                            + "             contaReceber.pagamentos<dataHora,valor>"
+                            + "             contaReceber.pagamentos<dataHora,usuario,valor>"
                             + "        ]"
                             + "]",
                     roles = "Admin,Vendedor"
@@ -150,6 +150,9 @@ public class PedidoVenda implements Serializable {
 
     @Version
     private Timestamp dataCadastro;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
 
     public PedidoVenda() {
         cliente = new Cliente();
@@ -157,6 +160,7 @@ public class PedidoVenda implements Serializable {
         data = new Date();
         status = StatusPedidoVenda.Novo;
         contaReceber = new ContaReceber();
+        usuario = (Usuario) Context.getCurrentUser();
     }
 
     private boolean produtoNoPedido(Produto produto) {
@@ -271,6 +275,16 @@ public class PedidoVenda implements Serializable {
         return dataCadastro;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -309,7 +323,7 @@ public class PedidoVenda implements Serializable {
             confirmMessage = "Deseja realmente cancelar?"
     )
     public String cancelar() {
-        return this.status.cancelar(this);
+        return this.status.cancelar(this,(Usuario) Context.getCurrentUser());
     }
 
     public String exibirDetalhes() {
@@ -327,7 +341,7 @@ public class PedidoVenda implements Serializable {
 
     public String executarPagamento(
             @ParameterDescriptor(displayName = "Valor a ser pago", required = true) double valor) {
-        return this.status.pagar(this, valor);
+        return this.status.pagar(this, valor,(Usuario) Context.getCurrentUser());
     }
 
     @Override

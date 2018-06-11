@@ -14,7 +14,7 @@ import entities.Repository;
 public class StatusPedidoPago implements IStatusPedidoVenda {
 
     @Override
-    public String cancelar(PedidoVenda pedido) {
+    public String cancelar(PedidoVenda pedido, Usuario usuario) {
         // Como o pedido já econtra-se pago é preciso apenas 
         // alterar o status para cancelado
         pedido.setStatus(StatusPedidoVenda.Cancelado);
@@ -23,7 +23,7 @@ public class StatusPedidoPago implements IStatusPedidoVenda {
     }
 
     @Override
-    public String pagar(PedidoVenda pedido, double valor) {
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario) {
         throw new IllegalStateException("O pedido de venda já encontra-se pago."); 
     }
 

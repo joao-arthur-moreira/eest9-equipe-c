@@ -10,7 +10,7 @@ package domain;
  * @author vitor
  */
 public interface IStatusPedidoVenda {
-    public String cancelar(PedidoVenda pedido);
-    public String pagar(PedidoVenda pedido, double valor);
+    public String cancelar(PedidoVenda pedido, Usuario usuario);
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario);
     public String gravarNovo(PedidoVenda pedido);
 }

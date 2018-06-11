@@ -10,14 +10,14 @@ import service.PagamentoService;
 public class StatusPedidoPagoParcial implements IStatusPedidoVenda {
 
     @Override
-    public String cancelar(PedidoVenda pedido) {
-        PagamentoService.Cancelar(pedido);
+    public String cancelar(PedidoVenda pedido, Usuario usuario) {
+        PagamentoService.Cancelar(pedido, usuario);
         return "Pedido cancelado com êxito.";
     }
 
     @Override
-    public String pagar(PedidoVenda pedido, double valor) {
-        return PagamentoService.Pagar(pedido, valor);
+    public String pagar(PedidoVenda pedido, double valor, Usuario usuario) {
+        return PagamentoService.Pagar(pedido, valor, usuario);
     }
 
     @Override
