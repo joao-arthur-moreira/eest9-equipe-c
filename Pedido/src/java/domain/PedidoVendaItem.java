@@ -70,14 +70,15 @@ public class PedidoVendaItem implements Serializable {
         if (produto.getPreco() <= 0) {
             throw new IllegalStateException("Não pode incluir produto com preço zero!");
         }
-        double total = qtd * produto.getPreco();
+        double soma = qtd * produto.getPreco();
         // Decrementando os valores do pedido
         pedido.setTotal(pedido.getTotal() - this.total);
         // Incrementando os valores para atualizar o saldo
-        pedido.setTotal(pedido.getTotal() + total);
+        pedido.setTotal(pedido.getTotal() + soma);
 
         // Atualizando o pedido atual
-        this.total = total;
+        this.total = soma;
+        this.qtd = qtd;
         this.produto = produto;
 
         return "Produto editado com êxito!";

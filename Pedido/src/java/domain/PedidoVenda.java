@@ -79,7 +79,7 @@ import service.DoubleToStr;
                     params = {
                         @Param(name = "id", value = "#{ID_PEDIDO_VENDA}")},
                     members = "["
-                            + " [novoPedido(),listarPedidos(),executarPagamento()];"
+                            + " [novoPedido(),listarPedidos(),executarPagamento(), cancelar()];"
                             + " Pedido["
                             + "         [id,cliente.nome,qtdItens,total];"
                             + "         [status,usuario.userName];"
@@ -149,7 +149,7 @@ public class PedidoVenda implements Serializable {
     private StatusPedidoVenda status;
 
     @Version
-    private Timestamp dataCadastro;
+    private Long dataCadastro;
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
@@ -271,7 +271,7 @@ public class PedidoVenda implements Serializable {
         this.status = status;
     }
 
-    public Timestamp getDataCadastro() {
+    public Long getDataCadastro() {
         return dataCadastro;
     }
 
@@ -320,7 +320,8 @@ public class PedidoVenda implements Serializable {
 
     @ActionDescriptor(
             confirm = true,
-            confirmMessage = "Deseja realmente cancelar?"
+            confirmMessage = "ATENÇÃO. Essa operação é irreversível! Deseja realmente cancelar o pedido selecionado?"
+            
     )
     public String cancelar() {
         return this.status.cancelar(this,(Usuario) Context.getCurrentUser());
