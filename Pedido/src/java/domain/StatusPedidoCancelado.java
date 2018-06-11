@@ -25,5 +25,5 @@ public class StatusPedidoCancelado implements IStatusPedidoVenda {
     public String gravarNovo(PedidoVenda pedido) {
         throw new IllegalStateException("O pedido encontra-se cancelado."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

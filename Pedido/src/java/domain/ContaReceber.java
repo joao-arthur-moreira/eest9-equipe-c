@@ -69,9 +69,6 @@ public class ContaReceber implements Serializable {
     
    
     
-    public String pagar(double valor){
-        throw new NotImplementedException();
-    }
 
     public Long getId() {
         return id;
@@ -97,11 +94,11 @@ public class ContaReceber implements Serializable {
         this.pedido = pedido;
     }
 
-    public double getValor() {
+    public double  getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(double  valor) {
         this.valor = valor;
     }
 

@@ -42,7 +42,7 @@ import org.hibernate.validator.constraints.br.CNPJ;
                     members = "*id,nome,cnpj,credito.limite,*credito.utilizado,*credito.disponivel,*enderecoCliente.cidade,'Ações'[listarPedidosDoCliente(),editar(),excluir()]",
                     namedQuery = "From Cliente p Order by p.nome ",
                     rows = 10,
-                    template = "@PAGE+@FILTER"
+                    template = "@PAGER+@FILTER"
             )
             ,
             @View(

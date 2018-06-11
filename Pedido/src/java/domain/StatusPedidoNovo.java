@@ -5,6 +5,7 @@
  */
 package domain;
 
+import entities.Context;
 import entities.Repository;
 import service.LimiteCreditoClienteService;
 
@@ -16,7 +17,8 @@ public class StatusPedidoNovo implements IStatusPedidoVenda {
     
     @Override
     public String cancelar(PedidoVenda pedido) {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          // Redireciona par a tela do cadastro de novo pedido
+          return "go:domain.PedidoVenda@novoPedidoVenda";
     }
 
     @Override
@@ -47,7 +49,10 @@ public class StatusPedidoNovo implements IStatusPedidoVenda {
         Repository.getInstance().add(pedido.getCliente());
         // Salvando tudo
         Repository.getInstance().persistAll();
-        return "Pedido salvo com êxito!";
+        // Redireciona para tela com o detalhe do pedido
+        // Salva no contexto o id do pedido
+        Context.setValue("ID_PEDIDO_VENDA",  pedido.getId());
+        return "go:domain.PedidoVenda@detalhePedido";
     }
     
 }

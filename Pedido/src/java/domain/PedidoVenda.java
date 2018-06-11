@@ -46,12 +46,13 @@ import javax.validation.constraints.NotNull;
                     name = "listaPedidosCliente",
                     title = "Listagem de pedidos do cliente '#{currentCliente}'",
                     members
-                    = "[id,cliente.nome,data,qtdItens,status,total,exibirDetalhes()]",
+                    = "id,cliente.nome,data,qtdItens,status,total,contaReceber.valorFalta,"
+                            + "'Ações'[executarPagamento(),exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p Where p.cliente = :cliente Order by p.id ",
                     params = {
                         @Param(name = "cliente", value = "#{currentCliente}")},
                     rows = 10,
-                    template = "@PAGE+@CRUD+@FILTER"
+                    template = "@PAGER+@CRUD+@FILTER"
             )
             ,
             @View(
@@ -63,7 +64,7 @@ import javax.validation.constraints.NotNull;
                             + "'Ações'[exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p  Order by p.id ",
                     rows = 10,
-                    template = "@PAGE+@FILTER"
+                    template = "@PAGER+@FILTER"
             )
             ,
             @View(
@@ -72,8 +73,9 @@ import javax.validation.constraints.NotNull;
                     title = "Detalhe do pedido",
                     namedQuery = "From PedidoVenda p Where p.id = :id",
                     params = {
-                        @Param(name = "id", value = "#{$_PEDIDO_VENDA}")},
+                        @Param(name = "id", value = "#{ID_PEDIDO_VENDA}")},
                     members = "["
+                            + "[novoPedido(),listarPedidos()];"
                     + "Pedido[id,cliente.nome,qtdItens,total];"
                     + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
                     + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
@@ -105,6 +107,7 @@ public class PedidoVenda implements Serializable {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Cliente cliente;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -291,8 +294,16 @@ public class PedidoVenda implements Serializable {
     }
 
     public String exibirDetalhes() {
-        Context.setValue("$_PEDIDO_VENDA", this.id);
+        Context.setValue("ID_PEDIDO_VENDA", this.id);
         return "go:domain.PedidoVenda@detalhePedido";
+    }
+    
+    public String listarPedidos(){
+        return "go:domain.PedidoVenda@listaPedidos";
+    }
+    
+    public String novoPedido(){
+        return "go:domain.PedidoVenda@novoPedidoVenda";
     }
 
     public String executarPagamento(
