@@ -59,7 +59,8 @@ import javax.validation.constraints.NotNull;
                     title = "Listagem de pedidos",
                     filters = "data,cliente,status",
                     members
-                    = "id,cliente.nome,data,qtdItens,status,total,exibirDetalhes()",
+                    = "id,cliente.nome,data,qtdItens,status,total,contaReceber.valorFalta,"
+                            + "'Ações'[exibirDetalhes(),cancelar()]",
                     namedQuery = "From PedidoVenda p  Order by p.id ",
                     rows = 10,
                     template = "@PAGE+@FILTER"
@@ -76,7 +77,7 @@ import javax.validation.constraints.NotNull;
                     + "Pedido[id,cliente.nome,qtdItens,total];"
                     + "Itens[itens<produto.codigo,produto.nome,qtd,total>];"
                     + "Financeiro[[executarPagamento()];[contaReceber.valorPago,contaReceber.valorFalta];"
-                    + "contaReceber.pagamentos<dataCadastro,valor>"
+                    + "contaReceber.pagamentos<dataHora,valor>"
                     + "]"
                     + "]"
             )

@@ -41,7 +41,7 @@ public class Pagamentos implements Serializable {
     @Column(precision = 4, scale = 2)
     private double valor;
 
-   @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataHora;
 
     public long getId() {
@@ -104,4 +104,9 @@ public class Pagamentos implements Serializable {
     public String excluir() {
         throw new NotImplementedException();
     }
+
+    public Pagamentos() {
+        dataHora = new Date();
+    }
+
 }

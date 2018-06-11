@@ -32,7 +32,7 @@ public class LimiteCreditoClienteService {
              throw new IllegalStateException("Cliente inválido!");
         }
         
-        String sql = "Update Cliete c set c.credito.utilizado = c.credito.utilizado + :valor "
+        String sql = "Update Cliente c set c.credito.utilizado = c.credito.utilizado + :valor "
                 + " Where c.id = :id";
         
         Repository.executeUpdate(sql, valor,cliente.getId());

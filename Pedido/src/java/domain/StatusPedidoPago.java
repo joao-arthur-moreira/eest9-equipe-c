@@ -5,6 +5,8 @@
  */
 package domain;
 
+import entities.Repository;
+
 /**
  *
  * @author vitor
@@ -13,7 +15,11 @@ public class StatusPedidoPago implements IStatusPedidoVenda {
 
     @Override
     public String cancelar(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Como o pedido já econtra-se pago é preciso apenas 
+        // alterar o status para cancelado
+        pedido.setStatus(StatusPedidoVenda.Cancelado);
+        Repository.save(pedido);
+        return "Pedido cancelado com êxito.";
     }
 
     @Override

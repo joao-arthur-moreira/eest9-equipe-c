@@ -15,7 +15,10 @@ public class StatusPedidoPendentePagamento implements IStatusPedidoVenda {
 
     @Override
     public String cancelar(PedidoVenda pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PagamentoService.Cancelar(pedido);
+        return "Pedido cancelado com êxito.";
+       
+        
     }
 
     @Override
